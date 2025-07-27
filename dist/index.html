@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Validation</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-300">
+
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-white rounded-[1rem] shadow-lg">
+      <h2 class="text-2xl text-center pt-5 font-bold">Contact</h2>
+      <form id="contactForm" class="p-6 flex flex-col gap-5">
+
+        <div>
+          <label class="text-[1.1rem] font-medium">First Name</label>
+          <input id="firstName" type="text" class="border h-12 w-full rounded-md border-gray-400 mt-2 pl-4" />
+          <span id="firstNameError" class="text-red-500 text-sm"></span>
+        </div>
+
+        <div>
+          <label class="text-[1.1rem] font-medium">Last Name</label>
+          <input id="lastName" type="text" class="border h-12 w-full rounded-md border-gray-400 mt-2 pl-4" />
+          <span id="lastNameError" class="text-red-500 text-sm"></span>
+        </div>
+
+        <div>
+          <label class="text-[1.1rem] font-medium">Phone Number</label>
+          <input id="phone" type="number" class="border h-12 w-full rounded-md border-gray-400 mt-2 pl-4" />
+          <span id="phoneError" class="text-red-500 text-sm"></span>
+        </div>
+
+        <div>
+          <label class="text-[1.1rem] font-medium">Email</label>
+          <input id="email" type="email" class="border h-12 w-full rounded-md border-gray-400 mt-2 pl-4" />
+          <span id="emailError" class="text-red-500 text-sm"></span>
+        </div>
+
+        <div>
+          <label for="gender" class="text-[1.1rem] font-medium">Gender</label>
+          <select id="gender" name="gender" class="border mt-2 h-12 w-full pl-4 pr-5 rounded-md border-gray-400">
+            <option value="other">Other</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <button type="submit" class="mt-4 py-3 w-full bg-gray-500 text-white rounded-md text-lg hover:bg-gray-600 transition-all">
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("contactForm");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Input values
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+
+      // Error spans
+      const firstNameError = document.getElementById("firstNameError");
+      const lastNameError = document.getElementById("lastNameError");
+      const phoneError = document.getElementById("phoneError");
+      const emailError = document.getElementById("emailError");
+
+      // Clear previous errors
+      firstNameError.textContent = "";
+      lastNameError.textContent = "";
+      phoneError.textContent = "";
+      emailError.textContent = "";
+
+      let isValid = true;
+
+      // First name validation
+      if (firstName.length < 4) {
+        firstNameError.textContent = "First name must be at least 4 characters.";
+        isValid = false;
+      }
+
+      // Last name validation
+      if (lastName.length < 4) {
+        lastNameError.textContent = "Last name must be at least 4 characters.";
+        isValid = false;
+      }
+
+      // Phone number validation
+      if (!/^\d{11}$/.test(phone)) {
+        phoneError.textContent = "Phone number must be exactly 11 digits.";
+        isValid = false;
+      }
+
+      // Email validation
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        emailError.textContent = "Invalid email format.";
+        isValid = false;
+      }
+
+      if (isValid) {
+        alert("Form submitted successfully!");
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
